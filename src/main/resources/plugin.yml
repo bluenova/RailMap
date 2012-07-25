@@ -1,0 +1,6 @@
+name: RailMap
+main: bluenova.railmap.RailMap
+version: 0.1
+commands:
+   railmap:
+   rm:
