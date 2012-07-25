@@ -44,11 +44,11 @@ public class PlayerEvents implements Listener {
                     Date startTime = new Date();               
                     rails.get(bluenova.railmap.core.System.railIndex).setStartTime(startTime.getTime());
                     
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().toString()));
+                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
                 }
                 
                 if (!rails.get(bluenova.railmap.core.System.railIndex).getPoints().isEmpty() && isCurve(rails.get(bluenova.railmap.core.System.railIndex).getPoints(), loc)) {
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().toString()));
+                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
                 }
             } else {
                 
@@ -57,7 +57,7 @@ public class PlayerEvents implements Listener {
                     evt.getPlayer().sendMessage(ChatColor.GREEN + "The record of the rail has stopped!");
                     bluenova.railmap.core.System.record = false;
                     
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().toString()));
+                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
                     
                     Date endTime = new Date();               
                     rails.get(bluenova.railmap.core.System.railIndex).setEndTime(endTime.getTime());

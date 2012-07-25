@@ -75,6 +75,10 @@ public class RailMap extends JavaPlugin {
     
     @Override
     public void onEnable() { 
+        RailMap.plugin = this;
+        RailMap.pm = getServer().getPluginManager();
+        RailMap.server = getServer();
+        
         RailMap.dynmap = pm.getPlugin("dynmap");
         if(RailMap.dynmap == null) {
             System.out.println("Dynmap not Found!");
@@ -82,19 +86,18 @@ public class RailMap extends JavaPlugin {
             return;
         }  
         RailMap.dynapi = (DynmapAPI)RailMap.dynmap;
-        
-        RailMap.plugin = this;
-        RailMap.pm = getServer().getPluginManager();
-        RailMap.server = getServer();
-        
+               
         myExecutor = new RailMapCommandExecutor(this, rails);
 	getCommand("rm").setExecutor(myExecutor);
         getCommand("railmap").setExecutor(myExecutor);
         
         RailMap.pm.registerEvents(new PlayerEvents(rails), this);
         
+        if(!dynmap.isEnabled())
+            pm.enablePlugin(dynmap);
+        
         RailMap.dynhandler = new DynmapHandler(rails);
-        RailMap.dynhandler.run();        
+        RailMap.dynhandler.run(); 
     }
     
     
