@@ -43,6 +43,7 @@ public class DynmapHandler {
                y[i] = 64;
                z[i] = p.getZ();
                world = p.getWorld();
+               i++;
             }
             set.createPolyLineMarker("railmap.dynmap." + rail.getName(), rail.getName(), true, world, x, y, z, false);
         }
