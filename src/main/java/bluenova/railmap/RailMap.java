@@ -2,6 +2,7 @@ package bluenova.railmap;
 
 import bluenova.railmap.commands.RailMapCommandExecutor;
 import bluenova.railmap.core.Rails;
+import bluenova.railmap.dynmap.DynmapHandler;
 import bluenova.railmap.event.PlayerEvents;
 
 import com.nijiko.permissions.PermissionHandler;
@@ -14,14 +15,7 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import org.dynmap.DynmapAPI;
-import org.dynmap.markers.AreaMarker;
-import org.dynmap.markers.Marker;
-import org.dynmap.markers.MarkerAPI;
-import org.dynmap.markers.MarkerIcon;
-import org.dynmap.markers.MarkerSet;
-import org.dynmap.markers.PolyLineMarker;
 
 
 /**
@@ -63,9 +57,31 @@ public class RailMap extends JavaPlugin {
      */
     private List<Rails> rails = new ArrayList<Rails>();
     
+    /**
+     * The dynmap Plugin
+     */
+    public static Plugin dynmap;
+    
+    /**
+     * The dynmap API
+     */
+    public static DynmapAPI dynapi;
+    
+     /**
+     * The dynmap API Handler
+     */
+    public static DynmapHandler dynhandler;
+    
     
     @Override
-    public void onEnable() {    
+    public void onEnable() { 
+        RailMap.dynmap = pm.getPlugin("dynmap");
+        if(RailMap.dynmap == null) {
+            System.out.println("Dynmap not Found!");
+            this.setEnabled(false);
+            return;
+        }  
+        RailMap.dynapi = (DynmapAPI)RailMap.dynmap;
         
         RailMap.plugin = this;
         RailMap.pm = getServer().getPluginManager();
@@ -77,11 +93,8 @@ public class RailMap extends JavaPlugin {
         
         RailMap.pm.registerEvents(new PlayerEvents(rails), this);
         
-        double[] x = {0, 100};
-        double[] y = {65, 65};
-        double[] z = {0, 0};
-        
-        
+        RailMap.dynhandler = new DynmapHandler(rails);
+        RailMap.dynhandler.run();        
     }
     
     

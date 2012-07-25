@@ -65,6 +65,10 @@ public class RailMapCommandExecutor implements CommandExecutor {
                     }
                     
                     return true;
+                } else if (args[0].equalsIgnoreCase("rerender") && args.length == 1 && /*Util.hasPermission(sent, "fairytail.general")*/true) {
+                    RailMap.dynhandler.run();
+                    sent.sendMessage(ChatColor.GREEN + "Rail Rerendered!");                   
+                    return true;
                 } else {
                     return false;
                 }

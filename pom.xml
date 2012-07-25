@@ -34,24 +34,19 @@
       <scope>test</scope>
     </dependency>
       <dependency>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-          <version>1.2.5-R3.0</version>
-      </dependency>
-      <dependency>
           <groupId>ru.tehkode</groupId>
           <artifactId>PermissionsCompat</artifactId>
           <version>1.15</version>
       </dependency>
     <dependency>
-      <groupId>org.dynmap</groupId>
-      <artifactId>DynmapCoreAPI</artifactId>
-      <version>0.40</version>
+      <groupId>org.bukkit</groupId>
+      <artifactId>craftbukkit</artifactId>
+      <version>1.2.5-R4.0</version>
     </dependency>
     <dependency>
       <groupId>org.dynmap</groupId>
-      <artifactId>dynmap-api</artifactId>
-      <version>0.40</version>
+      <artifactId>DynmapCoreAPI</artifactId>
+      <version>0.50</version>
     </dependency>
   </dependencies>
 </project>
