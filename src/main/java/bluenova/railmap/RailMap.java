@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,6 +73,10 @@ public class RailMap extends JavaPlugin {
      */
     public static DynmapHandler dynhandler;
     
+    /**
+    *The Recorded Player
+    */
+    public static Player recordedPlayer;
     
     @Override
     public void onEnable() { 

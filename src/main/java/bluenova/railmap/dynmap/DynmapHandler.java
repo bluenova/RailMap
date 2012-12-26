@@ -27,8 +27,9 @@ public class DynmapHandler {
     public void run() {
         this.markerAPI = RailMap.dynapi.getMarkerAPI();
         MarkerSet oldSet = this.markerAPI.getMarkerSet("railmap.dynmap");
-        if(oldSet != null)
+        if(oldSet != null) {
             oldSet.deleteMarkerSet();
+        }
         
         MarkerSet set = this.markerAPI.createMarkerSet("railmap.dynmap", "RailMap", null, false);
         for (Rails rail : this.rails) {
