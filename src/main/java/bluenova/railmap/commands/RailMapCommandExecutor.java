@@ -43,13 +43,13 @@ public class RailMapCommandExecutor implements CommandExecutor {
                     return true;
 
                 } else if (args[0].equalsIgnoreCase("start") && args.length == 2 && /*Util.hasPermission(sent, "fairytail.general")*/ true) {
-                    if (RailMap.recordedPlayer == null) {
+                    if (!RailMap.recordedPlayer.contains(sent)) {
                         sent.sendMessage(ChatColor.GREEN + "The record of the rail is starting!");
                         this.rails.add(new Rails());
                         bluenova.railmap.core.System.railIndex = this.rails.size() - 1;
                         this.rails.get(bluenova.railmap.core.System.railIndex).setName(args[1]);
                         bluenova.railmap.core.System.record = true;
-                        RailMap.recordedPlayer = sent;
+                        RailMap.recordedPlayer.add(sent);
                     } else {
                         sent.sendMessage(ChatColor.RED + "An other Player is recording!");
                     }
@@ -57,7 +57,7 @@ public class RailMapCommandExecutor implements CommandExecutor {
 
                 } else if (args[0].equalsIgnoreCase("stop") && args.length == 1 && /*Util.hasPermission(sent, "fairytail.general")*/ true) {
 
-                    if (RailMap.recordedPlayer.equals(sent)) {
+                    if (RailMap.recordedPlayer.contains(sent)) {
                         sent.sendMessage(ChatColor.GREEN + "The record of the rail has stopped!");
                         bluenova.railmap.core.System.record = false;
 
@@ -65,7 +65,7 @@ public class RailMapCommandExecutor implements CommandExecutor {
                             rails.remove(bluenova.railmap.core.System.railIndex);
                             bluenova.railmap.core.System.railIndex = bluenova.railmap.core.System.railIndex - 1;
                         }
-                        RailMap.recordedPlayer = null;
+                        RailMap.recordedPlayer.remove(sent);
                     } else {
                         sent.sendMessage(ChatColor.RED + "You are not Recording!");
                     }

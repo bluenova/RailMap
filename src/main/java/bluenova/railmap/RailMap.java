@@ -74,7 +74,7 @@ public class RailMap extends JavaPlugin {
     /**
     *The Recorded Player
     */
-    public static Player recordedPlayer;
+    public static List<Player> recordedPlayer = new ArrayList<Player>();
     
     @Override
     public void onEnable() { 
