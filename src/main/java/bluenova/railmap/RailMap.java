@@ -82,9 +82,6 @@ public class RailMap extends JavaPlugin {
         RailMap.pm = getServer().getPluginManager();
         RailMap.server = getServer();
         
-        if(!this.setupPermissions())
-            return;
-        
         RailMap.dynmap = pm.getPlugin("dynmap");
         if(RailMap.dynmap == null) {
             System.out.println("[RailMap] Dynmap not Found!  Disableing Plugin!");
@@ -102,13 +99,16 @@ public class RailMap extends JavaPlugin {
         if(!RailMap.dynmap.isEnabled())
             pm.enablePlugin(RailMap.dynmap);
         
+        //Setting up PermissionEx if plugin is installed
+        this.setupPermissions();   
+        
         RailMap.dynhandler = new DynmapHandler(rails);
         RailMap.dynhandler.run(); 
     }
     
     
     
-    private boolean setupPermissions() {
+    private void setupPermissions() {
         
         Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
         
@@ -116,10 +116,7 @@ public class RailMap extends JavaPlugin {
             RailMap.Permissions = PermissionsEx.getPermissionManager();
             System.out.println("[RailMap] Permissions Enabled");
         } else {
-            System.out.println("[RailMap] Permission System not found! Disableing Plugin!");
-            this.setEnabled(false);
-            return false;
+            System.out.println("[RailMap] Permission System not found! Using native Permissions or OP!");
         }
-        return true;
     }
 }
