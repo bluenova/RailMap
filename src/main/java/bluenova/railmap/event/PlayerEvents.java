@@ -34,36 +34,36 @@ public class PlayerEvents implements Listener {
 
         Location loc = evt.getPlayer().getLocation();
 
-        if (bluenova.railmap.core.System.record == true && evt.getPlayer().equals(RailMap.recordedPlayer)) {
+        if (RailMap.recordedPlayer.containsKey(evt.getPlayer())) {
+            int index = RailMap.recordedPlayer.get(evt.getPlayer());
             if (evt.getPlayer().isInsideVehicle()) {
 
-                if (rails.get(bluenova.railmap.core.System.railIndex).getPoints().isEmpty()) {
+                if (rails.get(index).getPoints().isEmpty()) {
 
                     Date startTime = new Date();
-                    rails.get(bluenova.railmap.core.System.railIndex).setStartTime(startTime.getTime());
+                    rails.get(index).setStartTime(startTime.getTime());
 
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
+                    rails.get(index).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
                 }
 
-                if (!rails.get(bluenova.railmap.core.System.railIndex).getPoints().isEmpty() && isCurve(rails.get(bluenova.railmap.core.System.railIndex).getPoints(), loc)) {
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
+                if (!rails.get(index).getPoints().isEmpty() && isCurve(rails.get(index).getPoints(), loc)) {
+                    rails.get(index).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
                 }
             } else {
 
-                if (!rails.get(bluenova.railmap.core.System.railIndex).getPoints().isEmpty()) {
+                if (!rails.get(index).getPoints().isEmpty()) {
 
                     evt.getPlayer().sendMessage(ChatColor.GREEN + "The record of the rail has stopped!");
-                    bluenova.railmap.core.System.record = false;
 
-                    rails.get(bluenova.railmap.core.System.railIndex).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
+                    rails.get(index).addPoint(new Point((int) loc.getX(), (int) loc.getZ(), loc.getWorld().getName()));
 
                     Date endTime = new Date();
-                    rails.get(bluenova.railmap.core.System.railIndex).setEndTime(endTime.getTime());
+                    rails.get(index).setEndTime(endTime.getTime());
 
-                    rails.get(bluenova.railmap.core.System.railIndex).setDriveTime(rails.get(bluenova.railmap.core.System.railIndex).getEndTime() - rails.get(bluenova.railmap.core.System.railIndex).getStartTime());
+                    rails.get(index).setDriveTime(rails.get(index).getEndTime() - rails.get(index).getStartTime());
 
-                    rc = new RailConfig(rails.get(bluenova.railmap.core.System.railIndex));
-                    RailMap.recordedPlayer = null;
+                    rc = new RailConfig(rails.get(index));
+                    RailMap.recordedPlayer.remove(evt.getPlayer());
                 }
             }
         }

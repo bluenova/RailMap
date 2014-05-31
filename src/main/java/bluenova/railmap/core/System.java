@@ -8,9 +8,6 @@ package bluenova.railmap.core;
  *
  * @author BoneBoy
  */
-public class System {
-    
-    public static boolean record = false;
-    
+public class System {   
     public static int railIndex = 0;
 }

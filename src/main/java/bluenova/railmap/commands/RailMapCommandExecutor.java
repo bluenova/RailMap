@@ -43,13 +43,12 @@ public class RailMapCommandExecutor implements CommandExecutor {
                     return true;
 
                 } else if (args[0].equalsIgnoreCase("start") && args.length == 2 && /*Util.hasPermission(sent, "fairytail.general")*/ true) {
-                    if (!RailMap.recordedPlayer.contains(sent)) {
+                    if (!RailMap.recordedPlayer.containsKey(sent)) {
                         sent.sendMessage(ChatColor.GREEN + "The record of the rail is starting!");
                         this.rails.add(new Rails());
                         bluenova.railmap.core.System.railIndex = this.rails.size() - 1;
                         this.rails.get(bluenova.railmap.core.System.railIndex).setName(args[1]);
-                        bluenova.railmap.core.System.record = true;
-                        RailMap.recordedPlayer.add(sent);
+                        RailMap.recordedPlayer.put(sent, bluenova.railmap.core.System.railIndex);
                     } else {
                         sent.sendMessage(ChatColor.RED + "An other Player is recording!");
                     }
@@ -57,10 +56,8 @@ public class RailMapCommandExecutor implements CommandExecutor {
 
                 } else if (args[0].equalsIgnoreCase("stop") && args.length == 1 && /*Util.hasPermission(sent, "fairytail.general")*/ true) {
 
-                    if (RailMap.recordedPlayer.contains(sent)) {
+                    if (RailMap.recordedPlayer.containsKey(sent)) {
                         sent.sendMessage(ChatColor.GREEN + "The record of the rail has stopped!");
-                        bluenova.railmap.core.System.record = false;
-
                         if (rails.get(bluenova.railmap.core.System.railIndex).getPoints().isEmpty()) {
                             rails.remove(bluenova.railmap.core.System.railIndex);
                             bluenova.railmap.core.System.railIndex = bluenova.railmap.core.System.railIndex - 1;

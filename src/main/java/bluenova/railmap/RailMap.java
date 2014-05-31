@@ -5,6 +5,7 @@ import bluenova.railmap.core.Rails;
 import bluenova.railmap.dynmap.DynmapHandler;
 import bluenova.railmap.event.PlayerEvents;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -72,9 +73,9 @@ public class RailMap extends JavaPlugin {
     public static DynmapHandler dynhandler;
     
     /**
-    *The Recorded Player
+    *The Recorded Player to RailIndex
     */
-    public static List<Player> recordedPlayer = new ArrayList<Player>();
+    public static HashMap<Player, Integer> recordedPlayer = new HashMap<Player, Integer>();
     
     @Override
     public void onEnable() { 
