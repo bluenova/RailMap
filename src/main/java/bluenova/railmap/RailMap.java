@@ -4,19 +4,17 @@ import bluenova.railmap.commands.RailMapCommandExecutor;
 import bluenova.railmap.core.Rails;
 import bluenova.railmap.dynmap.DynmapHandler;
 import bluenova.railmap.event.PlayerEvents;
-
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 
 /**
@@ -37,12 +35,12 @@ public class RailMap extends JavaPlugin {
      * The Bukkit Server
      */
     public static Server server;
-    
+       
     /**
-     * Permission Handler for Permission Plugins
+     * The Permision Manager
      */
-    public static PermissionHandler Permissions;
-    
+    public static PermissionManager Permissions;
+
     /**
      * Listener Object For commands
      */
@@ -84,9 +82,12 @@ public class RailMap extends JavaPlugin {
         RailMap.pm = getServer().getPluginManager();
         RailMap.server = getServer();
         
+        if(!this.setupPermissions())
+            return;
+        
         RailMap.dynmap = pm.getPlugin("dynmap");
         if(RailMap.dynmap == null) {
-            System.out.println("Dynmap not Found!");
+            System.out.println("[RailMap] Dynmap not Found!  Disableing Plugin!");
             this.setEnabled(false);
             return;
         }  
@@ -98,8 +99,8 @@ public class RailMap extends JavaPlugin {
         
         RailMap.pm.registerEvents(new PlayerEvents(rails), this);
         
-        if(!dynmap.isEnabled())
-            pm.enablePlugin(dynmap);
+        if(!RailMap.dynmap.isEnabled())
+            pm.enablePlugin(RailMap.dynmap);
         
         RailMap.dynhandler = new DynmapHandler(rails);
         RailMap.dynhandler.run(); 
@@ -107,18 +108,18 @@ public class RailMap extends JavaPlugin {
     
     
     
-    private void setupPermissions() {
+    private boolean setupPermissions() {
         
         Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
         
-        if (RailMap.Permissions == null) {
-            
-            if (test != null) {
-                RailMap.Permissions = ((Permissions) test).getHandler();
-                System.out.println("[FairyTailCraft] Permission system detected!");
-            } else {
-                System.out.println("[FairyTailCraft] Permission system not detected, defaulting to OP");
-            }
+        if(Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx")){
+            RailMap.Permissions = PermissionsEx.getPermissionManager();
+            System.out.println("[RailMap] Permissions Enabled");
+        } else {
+            System.out.println("[RailMap] Permission System not found! Disableing Plugin!");
+            this.setEnabled(false);
+            return false;
         }
+        return true;
     }
 }
